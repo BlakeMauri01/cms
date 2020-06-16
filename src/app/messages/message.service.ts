@@ -6,24 +6,24 @@ import { MOCKMESSAGES } from './MOCKMESSAGES';
     providedIn: 'root'
 })
 export class MessageService {
-    messages: Messages[] = [];
-    contactSelectedEvent = new EventEmitter<Message>();
+    messages: Message[] = [];
+    messageChangeEvent = new EventEmitter<Message>();
 
     constructor() {
         this.messages = MOCKMESSAGES;
     }
 
-    getContact(id: string): Message {
-        for (const contact of this.messages) {
-            if (contact.id === id) {
-                return contact;
+    getMessage(id: string): Message {
+        for (const message of this.messages) {
+            if (message.id === id) {
+                return message;
             }
         }
 
         return null;
     }
 
-    getContacts(): Message[] {
+    getMessages(): Message[] {
         return this.messages.slice();
     }
 }
