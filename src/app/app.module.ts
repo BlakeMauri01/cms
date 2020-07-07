@@ -18,6 +18,7 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { DropdownDirective } from 'src/shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
+import { WindRefService } from './wind-ref.service';
 
 
 
@@ -38,13 +39,13 @@ import { AppRoutingModule } from './app-routing.module';
     MessageEditComponent,
     MessageItemComponent,
     MessageListComponent,
-    DropdownDirective
+    DropdownDirective,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [WindRefService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
