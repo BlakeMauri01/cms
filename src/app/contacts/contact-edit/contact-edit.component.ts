@@ -84,4 +84,30 @@ export class ContactEditComponent implements OnInit {
     }
     this.groupContacts.splice(i, 1);
   }
+
+  isInvalidContact(newContact: Contact) {
+    if (!newContact) {
+      return true;
+    }
+    if (newContact.id === this.contact.id){
+      return true;
+    }
+
+    for (let i = 0; i < this.groupContacts.length, i++) {
+      if (newContact.id === this.groupContacts[i].id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  addToGroup($event: any) {
+    let selectedContact: Contact = $event.dragData;
+    this.invalidGroupContact = this.isInvalidContact(selectedContact);
+    if (this.invalidGroupContact) {
+      return;
+    }
+    this.groupCountacts.push(selectedContact);
+    this.invalidGroupContact = false;
+  }
 }
