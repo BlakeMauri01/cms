@@ -30,37 +30,33 @@ export class ContactEditComponent implements OnInit {
         return;
       }
 
-      this.contactService.getContact(this.id)
-      .subscribe(contactData => {
-        this.originalContact = contactData.contact;
+      this.originalContact = this.contactService.getContact(this.id);
 
-        if(!this.originalContact) {
-          return;
-        }
+      if (!this.originalContact) {
+        return;
+      }
 
-        this.editMode = true;
-        this.contact =JSON.parse(JSON.stringify(this.originalContact));
+      this.editMode = true;
+      this.contact = JSON.parse(JSON.stringify(this.originalContact));
 
-        if(
-          this.originalContact.group &&
-          this.originalContact.group.length > 0
-        ) {
-          this.groupContacts = JSON.parse(
-            JSON.stringify(this.originalContact.group)
-          )
-        }
-      });
+      if (
+        this.originalContact.group &&
+        this.originalContact.group.length > 0
+      ) {
+        this.groupContacts = JSON.parse(
+          JSON.stringify(this.originalContact.group)
+        )
+      }
     });
-
   }
 
   onSubmit(form: NgForm) {
     const value = form.value;
     const newContact = new Contact(
       '',
-      value.id,
       value.name,
       value.email,
+      value.phone,
       value.imageUrl,
       this.groupContacts
     );
@@ -89,11 +85,11 @@ export class ContactEditComponent implements OnInit {
     if (!newContact) {
       return true;
     }
-    if (newContact.id === this.contact.id){
+    if (newContact.id === this.contact.id) {
       return true;
     }
 
-    for (let i = 0; i < this.groupContacts.length, i++) {
+    for (let i = 0; i < this.groupContacts.length; i++) {
       if (newContact.id === this.groupContacts[i].id) {
         return true;
       }
@@ -103,11 +99,10 @@ export class ContactEditComponent implements OnInit {
 
   addToGroup($event: any) {
     let selectedContact: Contact = $event.dragData;
-    this.invalidGroupContact = this.isInvalidContact(selectedContact);
-    if (this.invalidGroupContact) {
+    const invalidGroupContact = this.isInvalidContact(selectedContact);
+    if (invalidGroupContact) {
       return;
     }
-    this.groupCountacts.push(selectedContact);
-    this.invalidGroupContact = false;
+    this.groupContacts.push(selectedContact);
   }
 }

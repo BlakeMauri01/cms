@@ -19,7 +19,7 @@ import { MessageItemComponent } from './messages/message-item/message-item.compo
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { DropdownDirective } from 'src/shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
-import { DnDModule, DndModule } from 'ng2-dnd';
+import { DndModule } from 'ng2-dnd';
 
 
 
@@ -45,7 +45,7 @@ import { DnDModule, DndModule } from 'ng2-dnd';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
     DndModule.forRoot()
   ],
   providers: [],

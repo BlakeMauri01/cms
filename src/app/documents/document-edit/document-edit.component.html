@@ -12,10 +12,11 @@
             class="form-control"
             size="120"
             max="120"
-            name="title"
+            name="name"
             [ngModel] = "document?.name" 
             #name="ngModel"
             required>
+            <div class="alert alert-danger" *ngIf="name.invalid && name.touched">Enter a valid Document title</div>
         </div>
 
         <div class="col-sm-12 form-group">
@@ -44,6 +45,7 @@
             [ngModel] = "document?.documentUrl"
             #documentUrl="ngModel"
             required>
+            <div class="alert alert-danger" *ngIf="documentUrl.invalid && documentUrl.touched">Enter a valid Document URL</div>
         </div>
       </div>
 
@@ -56,9 +58,7 @@
           <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </div>
-
     </form>
-
   </div>
 </div>
 

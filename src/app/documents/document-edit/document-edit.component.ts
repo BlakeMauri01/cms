@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DocumentService } from '../document.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Document } from '../document.model';'
+import { Document } from '../document.model';
 
 @Component({
   selector: 'cms-document-edit',
@@ -30,9 +30,7 @@ export class DocumentEditComponent implements OnInit {
         return;
       }
 
-      this.documentService.getDocument(this.id)
-        .subscribe(documentData => {
-          this.originalDocument = documentData.contact;
+      this.originalDocument = this.documentService.getDocument(this.id)
 
           if (!this.originalDocument) {
             return;
@@ -41,18 +39,16 @@ export class DocumentEditComponent implements OnInit {
           this.editMode = true;
           this.document = JSON.parse(JSON.stringify(this.originalDocument));
         });
-    });
-
   }
 
   onSubmit(form: NgForm) {
     const value = form.value;
     const newDocument = new Document(
       '',
-      value.id,
       value.name,
       value.description,
       value.documentUrl,
+      null
     );
 
     if (this.editMode) {

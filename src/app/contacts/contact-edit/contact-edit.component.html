@@ -28,7 +28,6 @@
             [ngModel]="contact?.email"
             #email="ngModel"
             email
-            pattern=“[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$”
             required>
             <div class="alert alert-danger" *ngIf="email.invalid && email.touched">Enter a valid Email address</div>
         </div>
@@ -66,7 +65,7 @@
         <label for="groupList">Group contacts</label>
 
         <div class="row" id="groupList"
-             style="min-height: 3rem;" dnd-droppable [dropzones="[contactGroup']"
+             style="min-height: 3rem;" dnd-droppable [dropZones]="['contactGroup']"
              (onDropSuccess)="addToGroup($event)">
 
           <div *ngFor="let contact of groupContacts; let i = index">
@@ -82,15 +81,14 @@
       <div class="alert alert-danger" *ngIf="(name.invalid && name.touched) || (email.invalid && email.touched)">
         The Name and Email are required
       </div>
+
       <div class="row">
         <div class="col-xs-12">
           <button 
-          class="btn btn-success" type="submit" [disabled] ="!f.valid">Save
-        </button>
+          class="btn btn-success" type="submit" [disabled] ="!f.valid">Save</button>
           <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
         </div>
       </div>
-
     </form>
   </div>
 </div>
