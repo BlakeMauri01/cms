@@ -20,6 +20,8 @@ import { MessageListComponent } from './messages/message-list/message-list.compo
 import { DropdownDirective } from 'src/shared/dropdown.directive';
 import { AppRoutingModule } from './app-routing.module';
 import { DndModule } from 'ng2-dnd';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -41,12 +43,14 @@ import { DndModule } from 'ng2-dnd';
     MessageItemComponent,
     MessageListComponent,
     DropdownDirective,
+    ContactsFilterPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

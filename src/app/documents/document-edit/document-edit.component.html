@@ -34,22 +34,22 @@
         </div>
 
         <div class="col-sm-12 form-group">
-          <label for="documentUrl">Document URL</label>
+          <label for="url">Document URL</label>
           <input
             type="text"
-            id="documentUrl"
+            id="url"
             class="form-control"
             size="150"
             max="255"
-            name="documentUrl"
-            [ngModel] = "document?.documentUrl"
-            #documentUrl="ngModel"
+            name="url"
+            [ngModel] = "document?.url"
+            #url="ngModel"
             required>
-            <div class="alert alert-danger" *ngIf="documentUrl.invalid && documentUrl.touched">Enter a valid Document URL</div>
+            <div class="alert alert-danger" *ngIf="url.invalid && url.touched">Enter a valid Document URL</div>
         </div>
       </div>
 
-      <div class="alert alert-danger" *ngIf="(name.invalid && name.touched) || (documentUrl.invalid && documentUrl.touched)">
+      <div class="alert alert-danger" *ngIf="(name.invalid && name.touched) || (url.invalid && url.touched)">
         The Document title and URL are required fields
       </div>
       <div class="row">
