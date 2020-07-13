@@ -11,6 +11,20 @@ export class MessageService {
     maxMessageId: number;
 
     constructor(private http: HttpClient) { }
+    
+    addMessage(newMessage: Message) {
+        if (!newMessage) {
+            return;
+        }
+
+        this.maxMessageId++;
+
+        newMessage.id = this.maxMessageId.toString();
+
+        this.messages.push(newMessage);
+
+        this.storeMessages();
+    }
 
     getMessage(id: string): Message {
         for (const message of this.messages) {
@@ -63,11 +77,5 @@ export class MessageService {
                 this.messageChangeEvent.next(this.messages.slice());
             }
         );
-    }
-
-    addMessage(message: Message) {
-        this.messages.push(message);
-        this.messageChangeEvent.emit(this.messages.slice());
-    }
-    
+    }    
 }
