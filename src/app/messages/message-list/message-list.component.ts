@@ -15,7 +15,7 @@ subscription: Subscription
   constructor(private messageService: MessageService) { }
 
   ngOnInit() {
-    this.subscription = this.messageService.messageChangeEvent.subscribe(
+    this.subscription = this.messageService.messageListChangedEvent.subscribe(
       (messages: Message[]) => {
         this.messages = messages
       }
@@ -25,6 +25,10 @@ subscription: Subscription
 
   onAddMessage(message: Message) {
     this.messages.push(message);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

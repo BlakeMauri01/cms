@@ -4,7 +4,8 @@
       <div class="panel-heading clearfix">
         <h2>{{ contact?.name }}</h2>
         <div class="pull-left">
-          <img [src]="contact?.imageUrl" alt="{{ contact?.name }}" class="img-responsive" style="max-height: 50px;" *ngIf="contact?.imageUrl">
+          <img [src]="contact?.imageUrl" alt="{{ contact?.name }}" class="img-responsive" style="max-height: 50px;"
+            *ngIf="contact?.imageUrl">
         </div>
         <div class="pull-right btn-toolbar">
           <a [routerLink]="['edit']" class="btn btn-primary">Edit</a>
@@ -15,9 +16,18 @@
         <div class="list-group-item-heading">
           Email: {{ contact?.email}}
         </div>
-        <div Class="list-group-item-heading">
+        <div class="list-group-item-heading">
           Phone: {{ contact?.phone }}
+        </div>
+        <div>
+          <div class="pannel-footer" *ngIf="contact?.group && contact?.group.length > 0">
+            <h3>Group Contacts:</h3>
+            <div *ngFor="let groupContact of contact?.group">
+              <div>
+                {{ groupContact?.name }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>

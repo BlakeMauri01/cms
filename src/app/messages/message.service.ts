@@ -1,13 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Message } from './message.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MessageService {
     messages: Message[] = [];
-    messageChangeEvent = new EventEmitter<Message[]>();
+    messageListChangedEvent = new Subject<Message[]>();
     maxMessageId: number;
 
     constructor(private http: HttpClient) { }
@@ -36,23 +37,6 @@ export class MessageService {
         return null;
     }
 
-    getMessages() {
-        this.http.get('https://wdd430-6499a.firebaseio.com/messages.json')
-        .subscribe(
-            (messages: Message[]) => {
-                this.messages = messages;
-
-                this.maxMessageId = this.getMaxId();
-
-                this.messages.sort((a, b) => (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
-                this.messageChangeEvent.next(this.messages.slice());
-            },
-            (error: any) => {
-                console.log(error);
-            }
-        );
-    }
-
     getMaxId(): number {
         let maxId = 0;
         for (const message of this.messages) {
@@ -66,6 +50,23 @@ export class MessageService {
         return maxId;
     }
 
+    getMessages() {
+        this.http.get('https://wdd430-6499a.firebaseio.com/messages.json')
+        .subscribe(
+            (messages: Message[]) => {
+                this.messages = messages;
+
+                this.maxMessageId = this.getMaxId();
+
+                this.messages.sort((a, b) => (a.id < b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
+                this.messageListChangedEvent.next(this.messages.slice());
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
+    }
+
     storeMessages() {
         let messages =JSON.stringify(this.messages);
 
@@ -74,7 +75,7 @@ export class MessageService {
         this.http.put('https://wdd430-6499a.firebaseio.com/messages.json', messages, { headers: headers })
         .subscribe(
             () => {
-                this.messageChangeEvent.next(this.messages.slice());
+                this.messageListChangedEvent.next(this.messages.slice());
             }
         );
     }    
