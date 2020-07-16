@@ -18,7 +18,7 @@ const documentRoutes = require('./server/routes/documents')
 // establish a connection to the mongo database
 // *** Important *** change yourPort and yourDatabase
 //     to those used by your database
-mongoose.connect('localhost:27017/cms',
+mongoose.connect('mongodb://localhost:27017/cms',
 {userNewUrlParser: true }, (err, res) => {
   if (err) {
     console.log('Connection failed' + err);
@@ -37,6 +37,7 @@ app.use(cookieParser());
 
 app.use(logger('dev')); // Tell express to use the Morgan logger
 
+// Add support for CORS
 app.use((req,res,next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(

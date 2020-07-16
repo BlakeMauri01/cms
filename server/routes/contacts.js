@@ -53,26 +53,71 @@ router.post('/', (req, res, next) => {
   });
 
   contact.save()
-  .then(createdContact => {
+    .then(createdContact => {
       res.status(201)
-      .json({
+        .json({
           message: 'Contact added successfully',
           contact: createdContact
-      });
-  })
-  .catch(error => {
-    returnError(res, error);
-  });
+        });
+    })
+    .catch(error => {
+      returnError(res, error);
+    });
 });
 
 router.put('/:id', (req, res, next) => {
-    Contact.findOne({
-        id: req.params.id
+  Contact.findOne({
+      id: req.params.id
     })
     .then(contact => {
-        contact.name = req.body.name;
-        contact.email = req.body.email;
-        contact.phone = req.body.phone,
-        contact.imageUrl = req.body.imageUrl;
-        contact.group = req.body.group;
+      contact.name = req.body.name;
+      contact.email = req.body.email;
+      contact.phone = req.body.phone;
+      contact.imageUrl = req.body.imageUrl;
+      contact.group = req.body.group;
+
+      Contact.updateOne({
+          id: req.params.id
+        }, contact)
+        .then(result => {
+          res.status(204).json({
+            message: 'Contact updated successfully'
+          })
+        })
+        .catch(error => {
+          returnError(res, error);
+        });
     })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Contact not found',
+        error: {
+          contact: 'Contact not found'
+        }
+      });
+    });
+});
+
+router.delete('/:id', (req, res, next) => {
+  Contact.findOne({
+      id: req.params.id
+    })
+    .then(contact => {
+      Contact.deleteOne({
+          id: req.params.id
+        })
+        .then(result => {
+          res.status(204).json({
+            message: 'Contact deleted successfully'
+          });
+        })
+        .catch(error => {
+          returnError(res, error);
+        })
+    })
+    .catch(error => {
+      returnError(res, error);
+    });
+});
+
+module.exports = router;

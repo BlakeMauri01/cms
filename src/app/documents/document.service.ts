@@ -55,7 +55,7 @@ export class DocumentService {
     }
 
     getDocuments() {
-        this.http.get('https://wdd430-6499a.firebaseio.com/documents.json')
+        this.http.get('http://localhost:3000/documents')
         .subscribe(
             (documents: Document[]) => {
                 this.documents = documents;
@@ -89,7 +89,7 @@ export class DocumentService {
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-        this.http.put('https://wdd430-6499a.firebaseio.com/documents.json', documents, { headers: headers })
+        this.http.put('http://localhost:3000/documents.json', documents, { headers: headers })
         .subscribe(
             () => {
                 this.documentListChangedEvent.next(this.documents.slice());

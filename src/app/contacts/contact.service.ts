@@ -7,25 +7,23 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class ContactService {
-    private contacts: Contact[];
+    contacts: Contact[];
     contactListChangedEvent = new Subject<Contact[]>();
     maxContactId: number;
 
     constructor(private http: HttpClient) { }
 
-    //maybe remove
-    sortAndSend() {
-        this.contacts.sort((a, b) => a.name < b.name ? 1 : b.name > a.name ? -1 : 0);
-        this.contactListChangedEvent.next(this.contacts.slice());
-    }
-
     addContact(newContact: Contact) {
         if (!newContact) {
             return;
         }
+
         this.maxContactId++;
+
         newContact.id = this.maxContactId.toString();
+
         this.contacts.push(newContact);
+
         this.storeContacts();
     }
 
@@ -33,12 +31,15 @@ export class ContactService {
         if (!contact) {
             return;
         }
+
         const pos = this.contacts.indexOf(contact);
+
         if (pos < 0) {
             return;
         }
 
         this.contacts.splice(pos, 1);
+
         this.storeContacts();
     }
 
@@ -53,7 +54,7 @@ export class ContactService {
     }
 
     getContacts() {
-        this.http.get('http://localhost:3000/contacts')
+        this.http.get('https://wdd430-6499a.firebaseio.com/contacts.json')
         .subscribe(
             (contacts: Contact[]) => {
                 this.contacts = contacts;
