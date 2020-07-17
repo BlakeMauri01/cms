@@ -72,7 +72,6 @@ router.put('/:id', (req, res, next) => {
       document.name = req.body.name;
       document.description = req.body.description;
       document.url = req.body.url;
-      document.children = req.body.children;
 
       Document.updateOne({
           id: req.params.id
